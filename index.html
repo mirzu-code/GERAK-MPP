@@ -1,0 +1,267 @@
+<!doctype html>
+<html lang="ms">
+  <head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta name="theme-color" content="#f5f7fb">
+    <title>GerakMPP — Pengurusan MPP UTHM</title>
+    <link rel="stylesheet" href="styles.css">
+  </head>
+  <body>
+    <section class="auth-screen" id="authScreen">
+      <div class="auth-card">
+        <a class="brand auth-brand" href="#" aria-label="GerakMPP">
+          <span class="brand-mark">G</span>
+          <span>gerak<span class="brand-light">MPP</span><small>UTHM • Majlis Perwakilan Pelajar</small></span>
+        </a>
+        <div class="auth-intro">
+          <p class="eyebrow">PORTAL DEMO MPP UTHM</p>
+          <h1 id="authHeading">Selamat kembali</h1>
+          <p class="subheading">Log masuk demo untuk urus pergerakan dan tuntutan tugasan MPP.</p>
+        </div>
+        <form id="loginForm">
+          <label for="loginEmail">E-mel</label>
+          <input id="loginEmail" type="email" autocomplete="username" required placeholder="nama@uthm.edu.my">
+          <label for="loginPassword">Kata laluan</label>
+          <input id="loginPassword" type="password" autocomplete="current-password" required minlength="8" placeholder="Sekurang-kurangnya 8 aksara">
+          <button class="button button-primary submit-button" type="submit">Log masuk <span>→</span></button>
+        </form>
+        <form id="signupForm" hidden>
+          <label for="signupName">Nama penuh</label>
+          <input id="signupName" autocomplete="name" required maxlength="100" placeholder="Nama seperti rekod pelajar">
+          <label for="signupMatric">Nombor matrik</label>
+          <input id="signupMatric" autocomplete="off" required maxlength="30" placeholder="Contoh: AI230001">
+          <label for="signupEmail">E-mel UTHM</label>
+          <input id="signupEmail" type="email" autocomplete="username" required placeholder="nama@uthm.edu.my">
+          <label for="signupPassword">Kata laluan</label>
+          <input id="signupPassword" type="password" autocomplete="new-password" required minlength="8" placeholder="Sekurang-kurangnya 8 aksara">
+          <button class="button button-primary submit-button" type="submit">Daftar akaun MPP <span>→</span></button>
+        </form>
+        <div id="authMessage" class="message" role="status" aria-live="polite"></div>
+        <div class="demo-accounts">
+          <p class="eyebrow">AKAUN UNTUK CUBA</p>
+          <button type="button" class="demo-account" data-demo-email="mpp1@demo.uthm">
+            <span><strong>Ahli MPP 1</strong><small>mpp1@demo.uthm</small></span><span>Pilih →</span>
+          </button>
+          <button type="button" class="demo-account" data-demo-email="mpp2@demo.uthm">
+            <span><strong>Ahli MPP 2</strong><small>mpp2@demo.uthm</small></span><span>Pilih →</span>
+          </button>
+          <button type="button" class="demo-account" data-demo-email="admin@demo.uthm">
+            <span><strong>Admin demo</strong><small>admin@demo.uthm</small></span><span>Pilih →</span>
+          </button>
+          <p class="demo-password">Kata laluan untuk semua akaun: <strong>demo1234</strong></p>
+        </div>
+        <p class="auth-footnote">Mod demo: data hanya tersimpan dalam browser/peranti ini. Bukan sistem akaun atau tuntutan sebenar.</p>
+      </div>
+    </section>
+
+    <div class="app-shell" id="appShell" hidden>
+      <aside class="sidebar" id="sidebar">
+        <a class="brand" href="#" aria-label="GerakMPP, halaman utama">
+          <span class="brand-mark">G</span>
+          <span>gerak<span class="brand-light">MPP</span><small>UTHM • Majlis Perwakilan Pelajar</small></span>
+        </a>
+        <div class="nav-label">MENU UTAMA</div>
+        <nav class="main-nav" aria-label="Menu utama">
+          <button class="nav-item active" data-page="dashboard"><span class="nav-icon">⌂</span> Ringkasan</button>
+          <button class="nav-item" data-page="movement"><span class="nav-icon">↗</span> Pergerakan</button>
+          <button class="nav-item" data-page="claims"><span class="nav-icon">▤</span> Tuntutan</button>
+          <button class="nav-item" data-page="leave"><span class="nav-icon">▣</span> Permohonan cuti</button>
+          <button class="nav-item" data-page="admin" id="adminNav" hidden><span class="nav-icon">✓</span> Kelulusan admin</button>
+        </nav>
+        <div class="sidebar-note">
+          <span class="note-icon">i</span>
+          <p>Mod demo: rekod hanya dalam browser ini dan tidak disegerakkan ke peranti lain.</p>
+        </div>
+        <div class="sidebar-user">
+          <div class="avatar" id="userAvatar">MP</div>
+          <div class="user-details"><strong id="userName">Ahli MPP</strong><small id="userRole">MPP • UTHM</small></div>
+          <button class="signout-button" id="signOutButton" type="button">Keluar</button>
+        </div>
+      </aside>
+
+      <main class="main-area">
+        <header class="topbar">
+          <button class="mobile-menu" id="mobileMenu" type="button" aria-label="Buka menu">☰</button>
+          <div class="breadcrumbs">MPP UTHM <span>/</span> <strong id="crumbTitle">Ringkasan</strong></div>
+          <div class="topbar-right">
+            <span class="today-label" id="todayLabel"></span>
+            <span class="top-avatar" id="topAvatar">MP</span>
+          </div>
+        </header>
+
+        <section class="page active" id="page-dashboard">
+          <div class="welcome-row">
+            <div>
+              <p class="eyebrow">RUANG KERJA MPP</p>
+              <h1>Salam, <span id="welcomeName">ahli MPP</span> <span class="wave">✦</span></h1>
+              <p class="subheading">Satu tempat untuk merekod gerak kerja dan mengurus tuntutan anda.</p>
+            </div>
+            <button class="button button-primary" data-go="movement"><span>＋</span> Rekod pergerakan</button>
+          </div>
+          <div class="summary-grid">
+            <article class="summary-card">
+              <div class="summary-top"><span class="summary-icon mint">↗</span><span class="summary-caption">PERGERAKAN</span></div>
+              <div class="summary-value" id="movementCount">0</div>
+              <div class="summary-foot">Rekod tugasan anda</div>
+            </article>
+            <article class="summary-card">
+              <div class="summary-top"><span class="summary-icon lavender">◷</span><span class="summary-caption">MENUNGGU KELULUSAN</span></div>
+              <div class="summary-value" id="pendingCount">0</div>
+              <div class="summary-foot">Tuntutan dalam semakan</div>
+            </article>
+            <article class="summary-card">
+              <div class="summary-top"><span class="summary-icon peach">▤</span><span class="summary-caption">TUNTUTAN DILULUSKAN</span></div>
+              <div class="summary-value" id="approvedTotal">RM 0.00</div>
+              <div class="summary-foot">Jumlah tuntutan anda</div>
+            </article>
+            <article class="summary-card">
+              <div class="summary-top"><span class="summary-icon peach">▣</span><span class="summary-caption">CUTI MENUNGGU</span></div>
+              <div class="summary-value" id="pendingLeaveCount">0</div>
+              <div class="summary-foot">Permohonan dalam semakan</div>
+            </article>
+          </div>
+          <div class="dashboard-grid">
+            <section class="panel activity-panel">
+              <div class="panel-heading">
+                <div><p class="eyebrow">PERGERAKAN ANDA</p><h2>Rekod terkini</h2></div>
+                <button class="text-button" data-go="movement">Lihat semua <span>→</span></button>
+              </div>
+              <div id="recentMovements" class="activity-list"></div>
+            </section>
+            <section class="panel activity-panel">
+              <div class="panel-heading">
+                <div><p class="eyebrow">TUNTUTAN ANDA</p><h2>Status terkini</h2></div>
+                <button class="text-button" data-go="claims">Lihat semua <span>→</span></button>
+              </div>
+              <div id="recentClaims" class="activity-list"></div>
+            </section>
+          </div>
+          <div class="footer-note">GerakMPP <span>•</span> Pengurusan urusan MPP UTHM</div>
+        </section>
+
+        <section class="page" id="page-movement">
+          <div class="page-heading">
+            <div><p class="eyebrow">LOG TUGASAN</p><h1>Pergerakan</h1><p class="subheading">Catat pergerakan yang dibuat untuk urusan rasmi MPP.</p></div>
+          </div>
+          <div class="content-grid">
+            <section class="panel form-panel">
+              <div class="panel-heading"><div><p class="eyebrow">REKOD BARU</p><h2>Tambah pergerakan</h2></div><span class="form-step">01</span></div>
+              <form id="movementForm">
+                <label for="movementPurpose">Tujuan tugasan</label>
+                <input id="movementPurpose" name="purpose" placeholder="Contoh: Menghadiri mesyuarat HEP" required maxlength="100">
+                <div class="form-row">
+                  <div><label for="movementType">Jenis urusan</label>
+                    <select id="movementType" name="category" required>
+                      <option value="Mesyuarat">Mesyuarat</option><option value="Program">Program</option><option value="Urusan rasmi">Urusan rasmi</option><option value="Lain-lain">Lain-lain</option>
+                    </select>
+                  </div>
+                  <div><label for="movementDestination">Destinasi</label><input id="movementDestination" name="destination" placeholder="Contoh: Pejabat HEP" required maxlength="100"></div>
+                </div>
+                <div class="form-row">
+                  <div><label for="movementDate">Tarikh</label><input id="movementDate" name="date" type="date" required></div>
+                  <div><label for="movementTime">Masa</label><input id="movementTime" name="time" type="time" required></div>
+                </div>
+                <label for="movementNotes">Catatan <span class="optional">(pilihan)</span></label>
+                <textarea id="movementNotes" name="notes" rows="3" maxlength="500" placeholder="Maklumat tambahan untuk rujukan tuntutan"></textarea>
+                <button class="button button-primary submit-button" type="submit">Simpan pergerakan <span>→</span></button>
+              </form>
+            </section>
+            <section class="panel history-panel">
+              <div class="panel-heading"><div><p class="eyebrow">SEJARAH</p><h2>Pergerakan saya</h2></div><span class="count-badge" id="movementHistoryCount">0 rekod</span></div>
+              <div id="movementHistory" class="history-list"></div>
+            </section>
+          </div>
+        </section>
+
+        <section class="page" id="page-claims">
+          <div class="page-heading">
+            <div><p class="eyebrow">TUNTUTAN PERBELANJAAN</p><h1>Tuntutan</h1><p class="subheading">Setiap tuntutan perlu dikaitkan dengan pergerakan dan disertakan bukti.</p></div>
+          </div>
+          <div class="claim-overview">
+            <div class="claim-total-card"><span class="summary-icon peach">▤</span><div><small>JUMLAH DILULUSKAN</small><strong id="claimPageTotal">RM 0.00</strong></div></div>
+            <div class="claim-tip"><span>✦</span><p><strong>Penting:</strong> Muat naik resit atau bukti perbelanjaan. Tuntutan tanpa bukti tidak boleh dihantar untuk kelulusan.</p></div>
+          </div>
+          <div class="content-grid claim-grid">
+            <section class="panel form-panel">
+              <div class="panel-heading"><div><p class="eyebrow">TUNTUTAN BARU</p><h2>Tambah perbelanjaan</h2></div><span class="form-step">02</span></div>
+              <form id="claimForm">
+                <label for="claimMovement">Pergerakan berkaitan</label>
+                <select id="claimMovement" name="movement_id" required></select>
+                <label for="claimCategory">Jenis tuntutan</label>
+                <select id="claimCategory" name="category" required>
+                  <option value="Minyak">Minyak</option><option value="Pengangkutan">Pengangkutan</option><option value="Barangan/Peralatan">Barangan / Peralatan</option><option value="Makanan">Makanan</option><option value="Penginapan">Penginapan</option><option value="Lain-lain">Lain-lain</option>
+                </select>
+                <label for="claimDescription">Butiran perbelanjaan</label>
+                <input id="claimDescription" name="description" placeholder="Contoh: Minyak untuk ke lokasi program" required maxlength="150">
+                <div class="form-row">
+                  <div><label for="claimAmount">Jumlah (RM)</label><input id="claimAmount" name="amount" type="number" min="0.01" max="100000" step="0.01" placeholder="0.00" required></div>
+                  <div><label for="claimDate">Tarikh perbelanjaan</label><input id="claimDate" name="purchase_date" type="date" required></div>
+                </div>
+                <label for="claimReceipt">Bukti / resit <span class="required-mark">wajib</span></label>
+                <input id="claimReceipt" name="receipt" type="file" accept="image/jpeg,image/png,application/pdf" required>
+                <p class="file-note">Format PDF, JPG atau PNG. Saiz maksimum 500 KB dalam mod demo.</p>
+                <button class="button button-primary submit-button" id="claimSubmit" type="submit">Hantar untuk kelulusan <span>→</span></button>
+              </form>
+            </section>
+            <section class="panel history-panel">
+              <div class="panel-heading"><div><p class="eyebrow">REKOD ANDA</p><h2>Senarai tuntutan</h2></div><span class="count-badge" id="claimHistoryCount">0 rekod</span></div>
+              <div id="claimHistory" class="history-list"></div>
+            </section>
+          </div>
+        </section>
+
+        <section class="page" id="page-leave">
+          <div class="page-heading">
+            <div><p class="eyebrow">PERMOHONAN KETIDAKHADIRAN</p><h1>Permohonan cuti</h1><p class="subheading">Mohon cuti lebih awal dan semak keputusan admin di sini.</p></div>
+          </div>
+          <div class="claim-overview">
+            <div class="claim-total-card"><span class="summary-icon lavender">▣</span><div><small>PERMOHONAN MENUNGGU</small><strong id="leavePendingTotal">0</strong></div></div>
+            <div class="claim-tip"><span>✦</span><p><strong>Makluman:</strong> Permohonan cuti akan dihantar kepada admin untuk semakan. Anda perlu menunggu kelulusan sebelum cuti diluluskan.</p></div>
+          </div>
+          <div class="content-grid">
+            <section class="panel form-panel">
+              <div class="panel-heading"><div><p class="eyebrow">PERMOHONAN BARU</p><h2>Mohon cuti</h2></div><span class="form-step">03</span></div>
+              <form id="leaveForm">
+                <label for="leaveCategory">Jenis cuti</label>
+                <select id="leaveCategory" name="category" required>
+                  <option value="Cuti sakit">Cuti sakit</option><option value="Urusan keluarga">Urusan keluarga</option><option value="Urusan peribadi">Urusan peribadi</option><option value="Kecemasan">Kecemasan</option><option value="Lain-lain">Lain-lain</option>
+                </select>
+                <div class="form-row">
+                  <div><label for="leaveStart">Tarikh mula</label><input id="leaveStart" name="start_date" type="date" required></div>
+                  <div><label for="leaveEnd">Tarikh akhir</label><input id="leaveEnd" name="end_date" type="date" required></div>
+                </div>
+                <label for="leaveReason">Sebab permohonan</label>
+                <textarea id="leaveReason" name="reason" rows="4" maxlength="500" placeholder="Nyatakan sebab permohonan cuti" required></textarea>
+                <label for="leaveEvidence">Dokumen sokongan <span class="optional">(pilihan)</span></label>
+                <input id="leaveEvidence" name="evidence" type="file" accept="image/jpeg,image/png,application/pdf">
+                <p class="file-note">Contoh: surat atau sijil sakit. PDF, JPG atau PNG; maksimum 500 KB.</p>
+                <button class="button button-primary submit-button" id="leaveSubmit" type="submit">Hantar permohonan <span>→</span></button>
+              </form>
+            </section>
+            <section class="panel history-panel">
+              <div class="panel-heading"><div><p class="eyebrow">SEJARAH</p><h2>Permohonan saya</h2></div><span class="count-badge" id="leaveHistoryCount">0 rekod</span></div>
+              <div id="leaveHistory" class="history-list"></div>
+            </section>
+          </div>
+        </section>
+
+        <section class="page" id="page-admin">
+          <div class="page-heading">
+            <div><p class="eyebrow">PANEL PENTADBIR</p><h1>Semakan tuntutan</h1><p class="subheading">Periksa butiran dan bukti sebelum meluluskan atau menolak.</p></div>
+          </div>
+          <section class="panel admin-panel">
+            <div class="panel-heading"><div><p class="eyebrow">PENGURUSAN TUNTUTAN</p><h2>Semua permohonan</h2></div><span class="count-badge" id="adminClaimCount">0 rekod</span></div>
+            <div id="adminClaims" class="admin-list"></div>
+          </section>
+          <section class="panel admin-panel leave-admin-panel">
+            <div class="panel-heading"><div><p class="eyebrow">PERMOHONAN KETIDAKHADIRAN</p><h2>Semakan cuti</h2></div><span class="count-badge" id="adminLeaveCount">0 permohonan</span></div>
+            <div id="adminLeaves" class="admin-list"></div>
+          </section>
+        </section>
+        <div id="toast" class="toast" role="status" aria-live="polite"></div>
+      </main>
+    </div>
+    <script src="app.js"></script>
+  </body>
+</html>
