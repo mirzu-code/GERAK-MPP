@@ -10,7 +10,7 @@ GerakMPP demo untuk mencatat pergerakan rasmi MPP, tuntutan perbelanjaan bersama
    - MPP 2: `mpp2@demo.uthm`
    - Admin: `admin@demo.uthm`
 3. Log masuk sebagai MPP dan tambah pergerakan.
-4. Buka **Tuntutan**, pilih pergerakan, kategori seperti minyak atau barangan, amaun, tarikh dan bukti PDF/JPG/PNG. Bukti wajib; had demo 500 KB.
+4. Buka **Tuntutan**, pilih kategori seperti minyak atau barangan, isi butiran, amaun, tarikh dan lampirkan bukti PDF/JPG/PNG. Tuntutan tidak perlu dipautkan kepada rekod pergerakan. Bukti wajib; had demo 500 KB.
 5. Log keluar, masuk sebagai admin dan buka **Kelulusan admin** untuk melihat bukti serta meluluskan atau menolak tuntutan. Nota wajib jika tuntutan ditolak.
 6. Sebagai MPP, buka **Permohonan cuti** untuk pilih jenis cuti, tarikh mula/tamat dan sebab; dokumen sokongan pilihan. Admin boleh meluluskan atau menolak permohonan di panel **Semakan cuti**. Nota wajib jika permohonan ditolak.
 7. Log masuk semula sebagai MPP untuk menyemak status tuntutan dan cuti.

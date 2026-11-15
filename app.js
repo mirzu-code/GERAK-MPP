@@ -119,10 +119,6 @@ function myLeaves() {
     .sort((a, b) => new Date(b.created_at) - new Date(a.created_at));
 }
 
-function getMovement(id) {
-  return state.movements.find(item => item.id === id);
-}
-
 function renderDashboard() {
   const movements = myMovements();
   const claims = myClaims();
@@ -145,16 +141,6 @@ function renderDashboard() {
     </article>`).join('') : '<div class="empty-state">Belum ada tuntutan dihantar.</div>';
 }
 
-function renderMovementSelect() {
-  const select = byId('claimMovement');
-  const movements = myMovements();
-  select.innerHTML = movements.length
-    ? `<option value="">Pilih pergerakan</option>${movements.map(item => `<option value="${escapeHtml(item.id)}">${escapeHtml(item.purpose)} — ${escapeHtml(item.destination)} (${formatDate(item.starts_at)})</option>`).join('')}`
-    : '<option value="">Rekod pergerakan dahulu untuk membuat tuntutan</option>';
-  select.disabled = movements.length === 0;
-  byId('claimSubmit').disabled = movements.length === 0;
-}
-
 function renderMovementHistory() {
   const movements = myMovements();
   byId('movementHistoryCount').textContent = `${movements.length} rekod`;
@@ -172,12 +158,11 @@ function renderClaimHistory() {
   byId('claimPageTotal').textContent = formatMoney(approvedTotal);
   byId('claimHistoryCount').textContent = `${claims.length} rekod`;
   byId('claimHistory').innerHTML = claims.length ? claims.map(item => {
-    const movement = getMovement(item.movement_id);
     return `<article class="history-item claim-history-item">
       <div class="history-icon">▤</div>
       <div class="history-main">
         <strong>${escapeHtml(item.description)}</strong>
-        <p>${escapeHtml(item.category)} · ${escapeHtml(movement?.purpose || 'Pergerakan')} · ${formatDate(item.purchase_date)}</p>
+        <p>${escapeHtml(item.category)} · ${formatDate(item.purchase_date)}</p>
         <p>Bukti: ${escapeHtml(item.proof_name)}</p>
         ${item.admin_note ? `<p class="review-note">Catatan admin: ${escapeHtml(item.admin_note)}</p>` : ''}
         <button class="proof-button" type="button" data-proof="${escapeHtml(item.id)}">Lihat bukti</button>
@@ -213,13 +198,12 @@ function renderAdminClaims() {
   byId('adminClaimCount').textContent = `${claims.length} rekod`;
   byId('adminClaims').innerHTML = claims.length ? claims.map(item => {
     const account = DEMO_ACCOUNTS.find(user => user.id === item.user_id);
-    const movement = getMovement(item.movement_id);
     const isPending = item.status === 'pending';
     return `<article class="admin-item">
       <div class="admin-details">
         <h3>${escapeHtml(item.description)}</h3>
         <p class="admin-person">${escapeHtml(account?.full_name || 'Ahli MPP')}${account?.matric_no !== '-' ? ` · ${escapeHtml(account?.matric_no || '')}` : ''}</p>
-        <p>${escapeHtml(item.category)} · ${formatDate(item.purchase_date)} · Pergerakan: ${escapeHtml(movement?.purpose || '—')} (${escapeHtml(movement?.destination || '—')})</p>
+        <p>${escapeHtml(item.category)} · Tarikh perbelanjaan: ${formatDate(item.purchase_date)}</p>
         <p>Bukti: ${escapeHtml(item.proof_name)}</p>
         ${item.admin_note ? `<p class="review-note">Catatan: ${escapeHtml(item.admin_note)}</p>` : ''}
       </div>
@@ -274,7 +258,6 @@ function renderAdminLeaves() {
 
 function render() {
   renderDashboard();
-  renderMovementSelect();
   renderMovementHistory();
   renderClaimHistory();
   renderLeaveHistory();
@@ -353,10 +336,6 @@ async function submitClaim(event) {
     notify('Saiz bukti melebihi had 500 KB dalam mod demo.', true);
     return;
   }
-  if (!myMovements().some(item => item.id === form.get('movement_id'))) {
-    notify('Pilih pergerakan anda yang sah untuk tuntutan ini.', true);
-    return;
-  }
   const button = byId('claimSubmit');
   button.disabled = true;
   try {
@@ -365,7 +344,6 @@ async function submitClaim(event) {
     const claim = {
       id: `claim-${Date.now()}-${Math.random().toString(16).slice(2)}`,
       user_id: state.user.id,
-      movement_id: form.get('movement_id'),
       category: form.get('category'),
       description: form.get('description').trim(),
       amount: Number(form.get('amount')),
